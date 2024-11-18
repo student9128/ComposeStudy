@@ -11,6 +11,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.AnimatedContentTransitionScope.SlideDirection
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.Spring
@@ -19,7 +20,7 @@ import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.scaleIn
-import androidx.compose.animation.with
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -254,9 +255,9 @@ private fun DoAnimationContent(count: Int, selectIndex: Int) {
                 label = "slide up",
                 transitionSpec = {
                     slideIntoContainer(
-                        towards = AnimatedContentScope.SlideDirection.Up,
-                        animationSpec = tween(durationMillis = 500)
-                    ).with(ExitTransition.None)
+                                        towards = SlideDirection.Up,
+                                        animationSpec = tween(durationMillis = 500)
+                                    ).togetherWith(ExitTransition.None)
                 }, contentAlignment = Alignment.Center
             ) { targetCount ->
                 Text(
@@ -274,9 +275,9 @@ private fun DoAnimationContent(count: Int, selectIndex: Int) {
                 label = "slide down",
                 transitionSpec = {
                     slideIntoContainer(
-                        towards = AnimatedContentScope.SlideDirection.Down,
-                        animationSpec = tween(durationMillis = 500)
-                    ).with(ExitTransition.None)
+                                        towards = SlideDirection.Down,
+                                        animationSpec = tween(durationMillis = 500)
+                                    ).togetherWith(ExitTransition.None)
                 }, contentAlignment = Alignment.Center
             ) { targetCount ->
                 Text(
@@ -294,10 +295,10 @@ private fun DoAnimationContent(count: Int, selectIndex: Int) {
                 label = "slide up in slide up out",
                 transitionSpec = {
                     slideIntoContainer(
-                        towards = AnimatedContentScope.SlideDirection.Up,
+                        towards = SlideDirection.Up,
                         animationSpec = tween(durationMillis = 500)
-                    ) with slideOutOfContainer(
-                        towards = AnimatedContentScope.SlideDirection.Up,
+                    ) togetherWith slideOutOfContainer(
+                        towards = SlideDirection.Up,
                         animationSpec = tween(durationMillis = 500)
                     )
                 }, contentAlignment = Alignment.Center
@@ -317,10 +318,10 @@ private fun DoAnimationContent(count: Int, selectIndex: Int) {
                 label = "slide down in slide down out",
                 transitionSpec = {
                     slideIntoContainer(
-                        towards = AnimatedContentScope.SlideDirection.Down,
+                        towards = SlideDirection.Down,
                         animationSpec = tween(durationMillis = 500)
-                    ) with slideOutOfContainer(
-                        towards = AnimatedContentScope.SlideDirection.Down,
+                    ) togetherWith slideOutOfContainer(
+                        towards = SlideDirection.Down,
                         animationSpec = tween(durationMillis = 500)
                     )
                 }, contentAlignment = Alignment.Center
@@ -339,7 +340,7 @@ private fun DoAnimationContent(count: Int, selectIndex: Int) {
                 targetState = count,
                 label = "scale in",
                 transitionSpec = {
-                    scaleIn(animationSpec = tween(durationMillis = 500)).with(ExitTransition.None)
+                    scaleIn(animationSpec = tween(durationMillis = 500)).togetherWith(ExitTransition.None)
                 }, contentAlignment = Alignment.Center
             ) { targetCount ->
                 Text(
@@ -353,7 +354,7 @@ private fun DoAnimationContent(count: Int, selectIndex: Int) {
 
         5 -> {
             AnimatedContent(targetState = count, label = "fade", transitionSpec = {
-                fadeIn(animationSpec = tween(durationMillis = 500)).with(
+                fadeIn(animationSpec = tween(durationMillis = 500)).togetherWith(
                     ExitTransition.None
                 )
             }, contentAlignment = Alignment.Center) { targetCount ->
