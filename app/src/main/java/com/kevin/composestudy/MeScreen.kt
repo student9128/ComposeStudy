@@ -5,12 +5,15 @@ import android.app.Activity
 import android.app.AlarmManager
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.icu.util.Calendar
+import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
+import android.provider.MediaStore
 import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -19,6 +22,8 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,6 +34,14 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.AlarmManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.UnsupportedEncodingException
 
 
 @Composable
@@ -63,7 +76,9 @@ fun MeScreen() {
 //                Toast.makeText(context, "Some permissions denied", Toast.LENGTH_SHORT).show()
 //            }
 //        }
-
+//    val ringtoneViewModel: RingtoneViewModel = viewModel(factory = RingtoneViewModelFactory(context))
+//    val ringtoneNames = ringtoneViewModel.ringtoneNames.value
+//    val ringtoneUris = ringtoneViewModel.ringtoneUris.value
     Column {
         Text("Me")
         Text("Click the button to set an alarm")
@@ -127,7 +142,32 @@ fun MeScreen() {
         Button(onClick = { cancelAlarm(context) }) {
             Text("Cancel Alarm")
         }
+        Button(onClick = {
+         getRingtone(context)
+
+        }) {
+            Text("获取手机铃声")
+        }
+//        LazyColumn(modifier = Modifier.height(100.dp)) {
+//          items(items = ringtoneNames){item-> Text(text = item)}
+//        }
     }
+}
+ fun getRingtone(context: Context){
+     CoroutineScope(Dispatchers.Main).launch {
+         withContext(Dispatchers.IO){
+
+         val ringtoneManager = RingtoneManager(context)
+         ringtoneManager.setType(RingtoneManager.TYPE_RINGTONE) // You can choose other types like TYPE_ALARM
+         val cursor = ringtoneManager.cursor
+             cursor?.columnNames.let { it?.map { println("it====$it") } }
+             cursor?.let { while (it.moveToNext()){
+                val title =  cursor.getString(RingtoneManager.TITLE_COLUMN_INDEX)
+                val id =  cursor.getString(RingtoneManager.ID_COLUMN_INDEX)
+                 println("title=$title,id=$id")
+             } }
+                 }
+             }
 }
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
