@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "com.kevin.composestudy"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.kevin.composestudy"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
