@@ -32,6 +32,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.startActivity
+import com.jakewharton.processphoenix.ProcessPhoenix
 import com.kevin.composestudy.http.Api
 import com.kevin.composestudy.http.HttpUtils
 import kotlinx.coroutines.CoroutineScope
@@ -105,6 +106,12 @@ fun HomeScreen() {
                             .width(100.dp)
                             .height(100.dp)
                     )
+            Button(onClick = {
+                println("点击button")
+                ProcessPhoenix.triggerRebirth(context)
+            }, colors = ButtonDefaults.buttonColors(containerColor = Color.Red)) {
+                Text(text = "重启app")
+            }
                 }
     }
 }

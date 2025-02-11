@@ -16,6 +16,7 @@ squareup-retrofit-adapters = "2.8.1"
 okhttp = "5.0.0-alpha.11"
 logging-interceptor = "5.0.0-alpha.11"
 core-splashscreen = "1.0.1"
+process-phoenix = "3.0.0"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -40,6 +41,7 @@ retrofit-adapters = { group = "com.squareup.retrofit2", name = "retrofit-adapter
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "logging-interceptor" }
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "core-splashscreen" }
+process-phoenix = { group = "com.jakewharton", name = "process-phoenix", version.ref = "process-phoenix" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
